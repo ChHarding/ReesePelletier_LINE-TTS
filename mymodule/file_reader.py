@@ -1,13 +1,16 @@
 import fitz  
 
-def read_pdf(pdf_path):
+def read_pdf(pdf_document):
     """
     Reads a PDF file and returns its text content.
+    
+    :pdf_document: PDF file path or file-like object to read from
+    :return: Text content of the PDF file
     """
     text = ""
     
     try:
-        pdf_document = fitz.open(pdf_path) # Open the PDF file
+        pdf_document = fitz.open(stream=pdf_document) # Open the PDF file
         # loop through text, print below for testing
         for page_num in range(pdf_document.page_count):
             text += cropped_text(pdf_document, page_num) # Read each page and crop text
@@ -20,8 +23,11 @@ def read_pdf(pdf_path):
 
 def cropped_text(pdf_document, page_num):
     """
-    Crops header and footer from current page in PDF, 
-    returns text after reading
+    Crops header and footer from current page in PDF, returns text after cropping.
+    
+    :pdf_document: PDF document object to read from
+    :page_num: Page number to read from the PDF document
+    :return: Text content of the page with header and footer cropped
     """
     page = pdf_document.load_page(page_num)
     
